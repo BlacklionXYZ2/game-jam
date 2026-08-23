@@ -10,6 +10,9 @@ class Button:
         self.text_colour=text_colour
         self.text_size=text_size
 
+    def above(self):
+        return self.rect.collidepoint(pygame.mouse.get_pos())
+    
     def clicked(self):
         return self.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed(3)[0]
 

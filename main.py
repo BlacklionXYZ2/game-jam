@@ -14,7 +14,6 @@ async def main():
             if event.type == pygame.QUIT:
                 running = False
         screen.fill(colour["white"])
-        write_text(screen, (0,0), "hi", colour["black"], 48, 0)
         clock.tick(60)
         pygame.display.flip()
         await asyncio.sleep(0)

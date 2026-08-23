@@ -8,26 +8,39 @@ class Menu:
         self.menu_type="Main"
         self.buttons={
             "Main":[
-                Button((300, 200), (200, 100),colour["l_blue"], "Play", colour["black"], 48), 
-                Button((300, 350), (200, 100),colour["l_blue"], "Tutorial", colour["black"], 48), 
-                Button((300, 500), (200, 100),colour["l_blue"], "Settings", colour["black"], 48),
-                Button((300, 650), (200, 100),colour["l_blue"], "Credits", colour["black"], 48)
+                Button((300, 200), (200, 100), colour["l_blue"], None, "Play", colour["black"], 48), 
+                Button((300, 350), (200, 100), colour["l_blue"], None, "Tutorial", colour["black"], 48), 
+                Button((300, 500), (200, 100), colour["l_blue"], None, "Settings", colour["black"], 48),
+                Button((300, 650), (200, 100), colour["l_blue"], None, "Credits", colour["black"], 48)
                 ],
-            "Settings":[],
-            "Credits":[],
+            "Settings":[
+                Button((50, 75), (100, 50), colour["l_blue"], None, "Home", colour["black"], 32),
+                Button((300, 200), (200, 100), colour["green"], colour["red"], "Sound", colour["black"], 48),
+                Button((300, 350), (200, 100), colour["green"], colour["red"], "Music", colour["black"], 48)
+                ],
+            "Credits":[
+                Button((50, 75), (100, 50), colour["l_blue"], None, "Home", colour["black"], 32)
+                ]
         }
-    def update(self, screen):
+    def update(self, screen, mouse_click):
         self.draw(screen)
-        clicked_button=self.check_buttons()
-        if clicked_button:
-            if clicked_button.text=="Play":
-                return "Game"
-            elif clicked_button.text=="Tutorial":
-                return "Tutorial"
-            elif clicked_button.text=="Settings":
-                self.menu_type="Settings"
-            elif clicked_button.text=="Credits":
-                self.menu_type="Credits"
+        if mouse_click:
+            clicked_button=self.check_buttons()
+            if clicked_button:
+                if clicked_button.text=="Play":
+                    return "Game"
+                elif clicked_button.text=="Tutorial":
+                    return "Tutorial"
+                elif clicked_button.text=="Settings":
+                    self.menu_type="Settings"
+                elif clicked_button.text=="Credits":
+                    self.menu_type="Credits"
+                elif clicked_button.text=="Home":
+                    self.menu_type="Main"
+                elif clicked_button.text=="Sound":
+                    clicked_button.swap_colour()
+                elif clicked_button.text=="Music":
+                    clicked_button.swap_colour()
         return "Menu"
 
     def draw(self, screen):
@@ -48,10 +61,11 @@ class Menu:
 
     def draw_credits(self, screen):
         write_text(screen, (400, 100), "Credits", colour["black"], 128, 0, "center")
+        
 
     def check_buttons(self):
         for i in self.buttons[self.menu_type]:
-            if i.clicked():
+            if i.above():
                 return i
         return False
 

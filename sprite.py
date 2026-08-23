@@ -16,7 +16,6 @@ class Sprite:
     def load_frame(self, x, y):
         img=pygame.Surface((self.width, self.height)).convert_alpha()
         img.blit(self.sheet, (0, 0), (x*self.width, y*self.height, self.width, self.height))
-        
         return img
 
     def load_animation(self, num):

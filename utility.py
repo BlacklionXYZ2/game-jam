@@ -20,11 +20,20 @@ colour={
     "d_green":(0, 128, 0)
 }
 
-def write_text(screen, location, text, colour, size, angle):
+def write_text(screen, location, text, colour, size, angle, draw_point):
     font = pygame.font.Font(None, size)
     text_surface = font.render(text, True, colour)
     angled_text=pygame.transform.rotate(text_surface, angle)
     text_rect = angled_text.get_rect()
-    text_rect.topleft = location 
+    if draw_point=="center":
+        text_rect.center = location
+    elif draw_point=="topleft":
+        text_rect.topleft = location 
+    elif draw_point=="topright":
+        text_rect.topright = location
+    elif draw_point=="bottomleft":
+        text_rect.bottomleft = location
+    elif draw_point=="bottomright":
+        text_rect.bottomright = location
     screen.blit(angled_text, text_rect)
 

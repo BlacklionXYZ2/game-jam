@@ -2,6 +2,7 @@ import asyncio
 import pygame
 
 from utility import colour, write_text
+
 async def main():
     pygame.init()
     screen_x=800

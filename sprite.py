@@ -5,7 +5,7 @@ class Sprite:
         self.frame_count=0
         self.animation_num=start_animation
         self.animations=[]
-        self.sheet=pygame.image.load(sheet).convert_alpha()
+        self.sheet=pygame.image.load("textures/"+sheet).convert_alpha()
         self.width=width
         self.height=height
         self.animation_frame_lengths=animation_frame_lengths

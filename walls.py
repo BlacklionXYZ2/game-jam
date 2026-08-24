@@ -3,22 +3,35 @@ import pygame
 from sprite import Sprite
 
 wall_textue_names={
-    "dark_E":(0,0),
-    "E":(1,0),
-    "fade_bot_E":(2,0),
-    "fade_top_E":(3,0),
-    "dark_N":(0,1),
-    "N":(1,1),
-    "fade_bot_N":(2,1),
-    "fade_top_N":(3,1),
-    "dark_S":(0,2),
-    "S":(1,2),
-    "fade_bot_S":(2,2),
-    "fade_top_S":(3,2),
-    "dark_W":(0,3),
-    "W":(1,3),
-    "fade_bot_W":(2,3),
-    "fade_top_W":(3,3)
+    "dark_NE":(0,0),
+    "dark_NW":(1,0),
+    "dark_SE":(2,0),
+    "dark_SW":(3,0),
+
+    "light_NE":(0,1),
+    "light_NW":(1,1),
+    "light_SE":(2,1),
+    "light_SW":(3,1),
+
+    "E":(0,2),
+    "light_E":(1,2),
+    "fade_bot_E":(2,2),
+    "fade_top_E":(3,2),
+
+    "N":(0,3),
+    "dark_N":(1,3),
+    "fade_bot_N":(2,3),
+    "fade_top_N":(3,3),
+
+    "S":(0,4),
+    "dark_S":(1,4),
+    "fade_bot_S":(2,4),
+    "fade_top_S":(3,4),
+
+    "W":(0,5),
+    "dark_W":(1,5),
+    "fade_bot_W":(2,5),
+    "fade_top_W":(3,5)
 }
 
 
@@ -27,7 +40,7 @@ class Wall:
         self.scale=8
         self.pixles=16
         self.rect=pygame.Rect(x*self.pixles*self.scale, y*self.pixles*self.scale, self.pixles*self.scale, self.pixles*self.scale,)
-        self.sprite=Sprite("wall_spritesheet.png", self.pixles, self.pixles, [4,4,4,4], [1,1,1,1], wall_textue_names[texture][1])
+        self.sprite=Sprite("walls_spritesheet.png", self.pixles, self.pixles, [4, 4, 4, 4, 4, 4], [1, 1, 1, 1, 1, 1], wall_textue_names[texture][1])
         self.sprite.change_frame(wall_textue_names[texture][0])
         
     def draw(self, screen, player_pos, screen_x, screen_y, player_scale, player_pixles):

@@ -16,7 +16,7 @@ async def main():
 
     game_state="Menu"
     menu=Menu()
-    
+
 
     clock = pygame.time.Clock()
 
@@ -40,7 +40,7 @@ async def main():
 
         elif game_state=="Pre-Game":
             player=Player()
-            walls=[Wall(1, 0, "S"), Wall(0, 1, "E"), Wall(2, 1, "W"), Wall(1, 2, "N")]
+            walls=[Wall(1, 0, "S"), Wall(0, 1, "E"), Wall(2, 1, "W"), Wall(1, 2, "N"), Wall(0, 0, "dark_SE"), Wall(2, 0, "dark_SW"), Wall(0, 2, "dark_NE"), Wall(2, 2, "dark_NW")]
             game_state="Game"
 
         elif game_state=="Game":

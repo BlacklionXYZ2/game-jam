@@ -95,7 +95,7 @@ def check_collisions(entities):
     index_A, index_B = torch.where(collisions)
 
     collision_list = [(entities[x], entities[y]) for x, y in zip(index_A.tolist(), index_B.tolist())]
-    player_collisions = [pair if any(collision_entities) in pair else None for pair in collision_list]
+    player_collisions = [pair if pair[0] in collision_entities or pair[1] in collision_entities else None for pair in collision_list]
     player_collisions = remove_value(player_collisions, None)
 
     return player_collisions

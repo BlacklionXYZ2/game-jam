@@ -2,15 +2,14 @@ import pygame
 import torch
 
 from sprite import Sprite
+from utility import Entity
 
-class Player:
+class Player(Entity):
     def __init__(self):
-        self.pos=torch.zeros(2)
-        self.pixels=16
         # self.sprite=Sprite("temp_player_sprite.png", self.pixels, self.pixels, [2, 2, 2, 2, 2, 2, 2, 2], [10, 10, 10, 10, 10, 10, 10, 10], 0)
         self.sprite=Sprite("player_spritesheet.png", self.pixels, self.pixels, [1, 1, 1, 1], [10, 10, 10, 10], 0)
         self.speed=2
-        self.scale=3
+        super().__init__(scale = 3, pixels = 16, pos = torch.zeros(2), sprite = self.sprite)
 
     def get_rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.pixels, self.pixels)

@@ -41,3 +41,11 @@ def remove_value(iterable, value):
     while value in iterable:
         iterable.remove(value)
     return iterable
+
+class Entity:
+    def __init__(self, scale, pixels, pos, sprite, is_moveable):
+        self.scale = scale
+        self.pixels = pixels
+        self.pos = pos
+        self.sprite = sprite
+        self.is_moveable = is_moveable

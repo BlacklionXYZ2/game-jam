@@ -77,12 +77,8 @@ def check_collisions(entities):
     min = torch.zeros((num_ents, 2))
 
     for obj, idx in enumerate(entities):
-        if type(obj) == Wall:
-            min[idx, :] = [obj.rect[0], obj.rect[1]]
-            max[idx, :] = [obj.rect[0] + obj.pixels, obj.rect[1] + obj.pixels]
-        elif type(obj) == Player:
-            min[idx, :] = obj.pos
-            max[idx, :] = obj.pos + obj.pixels
+        min[idx, :] = obj.pos
+        max[idx, :] = obj.pos + obj.pixels
 
     max_A = max.unsqueeze(1)
     min_A = min.unsqueeze(1)
@@ -99,3 +95,8 @@ def check_collisions(entities):
     player_collisions = remove_value(player_collisions, None)
 
     return player_collisions
+
+def resolve_collision(obj_a, obj_b):
+    pos_a = obj_a.pos
+    pos_b = obj_b.pos
+    delta = pos_a - pos_b #in progress

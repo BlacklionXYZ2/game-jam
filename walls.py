@@ -1,6 +1,8 @@
 import pygame
+import torch
 
 from sprite import Sprite
+from utility import Entity
 
 wall_textue_names={
     "dark_E":(0,0),
@@ -22,12 +24,12 @@ wall_textue_names={
 }
 
 
-class Wall:
+class Wall(Entity):
     def __init__(self, x, y, texture):
-        self.scale=8
-        self.pixels=16
-        self.rect=pygame.Rect(x*self.pixels*self.scale, y*self.pixels*self.scale, self.pixels*self.scale, self.pixels*self.scale,)
+        self.pos = torch.tensor((x*self.pixels*self.scale, y*self.pixels*self.scale))
+        self.rect=pygame.Rect(self.pos[0], self.pos[1], self.pixels*self.scale, self.pixels*self.scale,)
         self.sprite=Sprite("wall_spritesheet.png", self.pixels, self.pixels, [4,4,4,4], [1,1,1,1], wall_textue_names[texture][1])
+        super().__init(scale = 8, pixels = 16, pos = self.pos, sprite = self.sprite)
         self.sprite.change_frame(wall_textue_names[texture][0])
         
     def draw(self, screen, player_pos, screen_x, screen_y, player_scale, player_pixels):

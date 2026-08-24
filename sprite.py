@@ -5,7 +5,7 @@ class Sprite:
         self.frame_count=0
         self.animation_num=0
         self.animations=[]
-        self.sheet=pygame.image.load(sheet).convert_alpha()
+        self.sheet=pygame.image.load("temp_"+sheet).convert_alpha()
         self.width=width
         self.height=height
         self.animation_frame_lengths=animation_frame_lengths
@@ -43,7 +43,7 @@ class Sprite:
         if self.animation_time_periods[self.animation_num]-1==self.count:
             self.next_frame()
         self.count+=1
-        self.count%=self.animation_time_periods[self.animation_num]     
+        self.count%=self.animation_time_periods[self.animation_num]
 
     def draw(self, screen, pos, scale):
         img=self.animations[self.animation_num][self.frame_count]

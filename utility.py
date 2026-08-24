@@ -36,4 +36,3 @@ def write_text(screen, location, text, colour, size, angle, draw_point):
     elif draw_point=="bottomright":
         text_rect.bottomright = location
     screen.blit(angled_text, text_rect)
-

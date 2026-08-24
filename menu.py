@@ -22,6 +22,7 @@ class Menu:
                 Button((50, 75), (100, 50), colour["l_blue"], None, "Home", colour["black"], 32)
                 ]
         }
+
     def update(self, screen, mouse_click):
         self.draw(screen)
         if mouse_click:
@@ -61,7 +62,6 @@ class Menu:
 
     def draw_credits(self, screen):
         write_text(screen, (400, 100), "Credits", colour["black"], 128, 0, "center")
-        
 
     def check_buttons(self):
         for i in self.buttons[self.menu_type]:

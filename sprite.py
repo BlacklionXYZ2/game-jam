@@ -1,11 +1,11 @@
 import pygame
 
 class Sprite:
-    def __init__(self, sheet, width, height, animation_frame_lengths, animation_time_periods):
+    def __init__(self, sheet, width, height, animation_frame_lengths, animation_time_periods, start_animation):
         self.frame_count=0
-        self.animation_num=0
+        self.animation_num=start_animation
         self.animations=[]
-        self.sheet=pygame.image.load("temp_"+sheet).convert_alpha()
+        self.sheet=pygame.image.load(sheet).convert_alpha()
         self.width=width
         self.height=height
         self.animation_frame_lengths=animation_frame_lengths
@@ -38,6 +38,9 @@ class Sprite:
         self.animation_num=new_animation_num%len(self.animations)
         self.count=0
         self.frame_count=0
+
+    def change_frame(self, new_frame_num):
+        self.frame_count=new_frame_num
 
     def update(self):
         if self.animation_time_periods[self.animation_num]-1==self.count:

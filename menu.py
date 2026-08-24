@@ -29,7 +29,7 @@ class Menu:
             clicked_button=self.check_buttons()
             if clicked_button:
                 if clicked_button.text=="Play":
-                    return "Game"
+                    return "Pre-Game"
                 elif clicked_button.text=="Tutorial":
                     return "Tutorial"
                 elif clicked_button.text=="Settings":

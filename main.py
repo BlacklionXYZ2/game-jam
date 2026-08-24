@@ -44,6 +44,7 @@ async def main():
 
         elif game_state=="Pre-Game":
             player=Player()
+            collision_entities.append(player)
             walls=[Wall(1, 0, "S"), Wall(0, 1, "E"), Wall(2, 1, "W"), Wall(1, 2, "N")]
             entities = walls.append(player)
             game_state="Game"
@@ -96,5 +97,5 @@ def check_collisions(entities):
     collision_list = [(entities[x], entities[y]) for x, y in zip(index_A.tolist(), index_B.tolist())]
     player_collisions = [pair if any(collision_entities) in pair else None for pair in collision_list]
     remove_value(player_collisions, None)
-    
+
     return player_collisions

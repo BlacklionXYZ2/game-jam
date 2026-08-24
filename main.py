@@ -96,6 +96,6 @@ def check_collisions(entities):
 
     collision_list = [(entities[x], entities[y]) for x, y in zip(index_A.tolist(), index_B.tolist())]
     player_collisions = [pair if any(collision_entities) in pair else None for pair in collision_list]
-    remove_value(player_collisions, None)
+    player_collisions = remove_value(player_collisions, None)
 
     return player_collisions

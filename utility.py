@@ -40,3 +40,4 @@ def write_text(screen, location, text, colour, size, angle, draw_point):
 def remove_value(iterable, value):
     while value in iterable:
         iterable.remove(value)
+    return iterable

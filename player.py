@@ -5,9 +5,9 @@ from sprite import Sprite
 class Player:
     def __init__(self):
         self.pos=pygame.math.Vector2()
-        self.pixles=16
+        self.pixels=16
         # self.sprite=Sprite("temp_player_sprite.png", self.pixles, self.pixles, [2, 2, 2, 2, 2, 2, 2, 2], [10, 10, 10, 10, 10, 10, 10, 10], 0)
-        self.sprite=Sprite("player_spritesheet.png", self.pixles, self.pixles, [1, 1, 1, 1], [10, 10, 10, 10], 0)
+        self.sprite=Sprite("player_spritesheet.png", self.pixels, self.pixels, [1, 1, 1, 1], [10, 10, 10, 10], 0)
         self.speed=2
         self.scale=3
         
@@ -32,8 +32,7 @@ class Player:
     def draw(self,screen, screen_x, screen_y):
         self.sprite.draw(screen, (screen_x/2-16*self.scale, screen_y/2-16*self.scale), self.scale)
 
-    def update(self, screen, screen_x, screen_y, key):
+    def update(self, key):
         self.move(key)
-        self.draw(screen, screen_x, screen_y)
         self.sprite.update()
 

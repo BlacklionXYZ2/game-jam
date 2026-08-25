@@ -1,13 +1,17 @@
 import asyncio
 import pygame
+import torch
 
-from utility import colour, write_text
+from utility import colour, write_text, remove_value
 from menu import Menu
 from player import Player
 from walls import Wall
 from sprite import Sprite
 
+collision_entities = []
+
 async def main():
+    global collision_entities
 
     pygame.init()
 
@@ -41,8 +45,10 @@ async def main():
 
         elif game_state=="Pre-Game":
             player=Player()
+            collision_entities.append(player)
             background=Sprite("background.png", 144, 144, [1], [1], 0)
-            walls=[Wall(1, 0, "dark_S"), Wall(0, 1, "dark_E"), Wall(2, 1, "dark_W"), Wall(1, 2, "dark_N"), Wall(0, 0, "dark_SE"), Wall(2, 0, "dark_SW"), Wall(0, 2, "dark_NE"), Wall(2, 2, "dark_NW")]
+            walls=[Wall(1, 0, "dark_S"), Wall(0, 1, "dark_E"), Wall(2, 1, "dark_W"), Wall(1, 2, "dark_N"), Wall(0, 0, "dark_SE"), Wall(2, 0, "dark_SW"), Wall(0, 2, "dark_NE"), Wall(2, 2, "dark_NW")]          
+            entities = walls.append(player)
             game_state="Game"
 
         elif game_state=="Game":
@@ -54,6 +60,7 @@ async def main():
                 i.draw(screen, player.pos, screen_x, screen_y, player.scale, player.pixels)
             if mouse_click:
                 game_state="Menu"
+            check_collisions(entities)
 
         else:
             screen.fill(colour["black"])
@@ -67,3 +74,33 @@ async def main():
         await asyncio.sleep(0)
 
 asyncio.run(main())
+
+def check_collisions(entities):
+    num_ents = len(entities)
+    max = torch.zeros((num_ents, 2))
+    min = torch.zeros((num_ents, 2))
+
+    for obj, idx in enumerate(entities):
+        min[idx, :] = obj.pos
+        max[idx, :] = obj.pos + obj.pixels
+
+    max_A = max.unsqueeze(1)
+    min_A = min.unsqueeze(1)
+    max_B = max.unsqueeze(0)
+    min_B = min.unsqueeze(0)
+
+    overlap = (max_A > min_B) & (max_B > min_A)
+    overlap_mask = torch.all(overlap, dim = 2)
+    collisions = overlap_mask & torch.triu(torch.ones(num_ents, num_ents), dtype = torch.bool)
+    index_A, index_B = torch.where(collisions)
+
+    collision_list = [(entities[x], entities[y]) for x, y in zip(index_A.tolist(), index_B.tolist())]
+    player_collisions = [pair if pair[0] in collision_entities or pair[1] in collision_entities else None for pair in collision_list]
+    player_collisions = remove_value(player_collisions, None)
+
+    return player_collisions
+
+def resolve_collision(obj_a, obj_b):
+    pos_a = obj_a.pos
+    pos_b = obj_b.pos
+    delta = pos_a - pos_b #in progress

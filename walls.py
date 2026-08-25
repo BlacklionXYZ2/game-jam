@@ -1,6 +1,8 @@
 import pygame
+import torch
 
 from sprite import Sprite
+from utility import Entity
 
 wall_textue_names={
     "dark_NE":(0,0),
@@ -35,12 +37,14 @@ wall_textue_names={
 }
 
 
-class Wall:
+class Wall(Entity):
     def __init__(self, x, y, texture):
-        self.scale=8
-        self.pixels=16
-        self.rect=pygame.Rect(x*self.pixels*self.scale, y*self.pixels*self.scale, self.pixels*self.scale, self.pixels*self.scale,)
-        self.sprite=Sprite("walls_spritesheet.png", self.pixels, self.pixels, [4, 4, 4, 4, 4, 4], [1, 1, 1, 1, 1, 1], wall_textue_names[texture][1])
+        pixels=16
+        scale=8
+        self.pos = torch.tensor((x*pixels*scale, y*pixels*scale))
+        self.rect=pygame.Rect(self.pos[0], self.pos[1], pixels*scale, pixels*scale, is_moveable=False)
+        self.sprite=Sprite("walls_spritesheet.png", pixels, pixels, [4,4,4,4], [1,1,1,1], wall_textue_names[texture][1])
+        super().__init__(scale = scale, pixels = pixels, pos = self.pos, sprite = self.sprite, is_moveable=False)
         self.sprite.change_frame(wall_textue_names[texture][0])
         
     def draw(self, screen, player_pos, screen_x, screen_y, player_scale, player_pixels):
@@ -50,4 +54,3 @@ class Wall:
     def is_on_screen(self, player_pos, screen_x, screen_y):
         return True
         return self.rect.x<player_pos.x-screen_x/2-self.scale and self.rect.x>player_pos.x+screen_x/2 and self.rect.y<player_pos.y-screen_y/2-self.scale and  self.rect.y>player_pos.y+screen_y/2
-

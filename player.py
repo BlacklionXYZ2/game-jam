@@ -1,25 +1,32 @@
 import pygame
+import torch
 
 from sprite import Sprite
+from utility import Entity
 
-class Player:
+class Player(Entity):
     def __init__(self):
-        self.pos=pygame.math.Vector2()
-        self.pixels=16
-        # self.sprite=Sprite("temp_player_sprite.png", self.pixles, self.pixles, [2, 2, 2, 2, 2, 2, 2, 2], [10, 10, 10, 10, 10, 10, 10, 10], 0)
-        self.sprite=Sprite("player_spritesheet.png", self.pixels, self.pixels, [1, 1, 1, 1], [10, 10, 10, 10], 0)
+        pixels=16
+        self.sprite=Sprite("player_spritesheet.png", pixels, pixels, [1, 1, 1, 1], [10, 10, 10, 10], 0)
         self.speed=2
-        self.scale=3
+        super().__init__(scale = 3, pixels = pixels, pos = torch.zeros(2), sprite = self.sprite, is_moveable=True)
+
+    def get_rect(self):
+        return pygame.Rect(self.pos[0], self.pos[1], self.pixels, self.pixels)
         
 
     def move(self, key):
-        direction=pygame.math.Vector2()
-        direction+=pygame.math.Vector2(0,-1)*key[pygame.K_w]
-        direction+=pygame.math.Vector2(-1,0)*key[pygame.K_a]
-        direction+=pygame.math.Vector2(0,1)*key[pygame.K_s]
-        direction+=pygame.math.Vector2(1,0)*key[pygame.K_d]
-        
-        if direction!=pygame.math.Vector2():
+        direction=torch.zeros(2)
+        if key[pygame.K_w]:
+            direction+=torch.tensor((0,-1))
+        if key[pygame.K_a]:
+            direction+=torch.tensor((-1,0))
+        if key[pygame.K_s]:
+            direction+=torch.tensor((0,1))
+        if key[pygame.K_d]:
+            direction+=torch.tensor((1,0))
+        print(direction, torch.zeros(2))
+        if direction!=torch.zeros(2):#fix plzzzz
             direction=direction.normalize()
             animation=int((direction.as_polar()[1]/45+2)%8//2)
             if animation!=self.sprite.animation_num:
@@ -35,4 +42,3 @@ class Player:
     def update(self, key):
         self.move(key)
         self.sprite.update()
-
